@@ -160,15 +160,9 @@ _Όλα τα endpoints επιστρέφουν `application/json; charset=utf‑8
 
 ---
 
-## 📝 License
-Distributed under the **MIT License**. Δείτε [LICENSE](LICENSE) για λεπτομέρειες.
-
----
 
 ## 🙏 Credits
 * **Bootstrap 5.3** — CSS framework  
 * **DataTables** — interactive table UI  
 * **Icons** — Bootstrap Icons  
 * Idea, design & codebase: **@zpthanos**  
-
-> _“Clean code, clean clothes – Washland.”_ 🫧
