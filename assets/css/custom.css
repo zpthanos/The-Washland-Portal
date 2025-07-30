@@ -1,0 +1,142 @@
+@charset "UTF-8";
+/*────────────────────────────────────────────────────────────────────────────
+  0. FALLBACKS & POLYFILLS
+────────────────────────────────────────────────────────────────────────────*/
+@-ms-viewport{width:device-width;initial-scale:1}
+html{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+.dashboard .card{--card-elevation:10%;-webkit-filter:drop-shadow(0 2px calc(var(--card-elevation)) rgba(0,0,0,0.1));filter:drop-shadow(0 2px calc(var(--card-elevation)) rgba(0,0,0,0.1))}
+
+/*────────────────────────────────────────────────────────────────────────────
+  1. ΚΑΝΟΝΕΣ & IMPORTS
+────────────────────────────────────────────────────────────────────────────*/
+@namespace svg url(http://www.w3.org/2000/svg);
+@namespace mathml url(http://www.w3.org/1998/Math/MathML);
+@layer resets,base,components,utilities;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap") layer(base);
+@import url("legacy.css")                 layer(resets);
+@import url("theme-overrides.css")        layer(components);
+@property --card-elevation{syntax:'<percentage>';inherits:false;initial-value:5%}
+@counter-style roman-upper{system:numeric;symbols:I II III IV V VI VII VIII IX X;suffix:'. '}
+@font-feature-values Roboto{@styleset{small-caps:11}}
+@media(prefers-contrast:more){body{outline:2px solid var(--cherry)}}
+@supports(accent-color:auto){button{accent-color:var(--cherry)}}
+@viewport{width:device-width;initial-scale:1;maximum-scale:1;user-zoom:fixed}
+@scope(.dashboard){.card{--card-elevation:10%;filter:drop-shadow(0 2px calc(var(--card-elevation)) rgba(0,0,0,0.1))}}
+
+/*────────────────────────────────────────────────────────────────────────────
+  2. THEME & OPT VARIABLES
+────────────────────────────────────────────────────────────────────────────*/
+:root{--cherry:#D2042D;--cherry-dark:#b90325;--carbon:#0D0D0D;--carbon-light:#444;--accent-light:#fff;--r:.25rem;--trans-fast:.2s;--trans-med:.3s}
+
+/*────────────────────────────────────────────────────────────────────────────
+  3. RESET & BOX-SIZING
+────────────────────────────────────────────────────────────────────────────*/
+*,*::before,*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  border:0;
+}
+
+/*────────────────────────────────────────────────────────────────────────────
+  4. HTML & BODY
+────────────────────────────────────────────────────────────────────────────*/
+html,body{height:100%;width:100%}
+body{font-family:'Roboto','Segoe UI',Tahoma,Arial,sans-serif;background:#fff;color:#0D0D0D;line-height:1.5;font-weight:400;font-feature-settings:"cv01" on;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+
+/*────────────────────────────────────────────────────────────────────────────
+  5. LINKS
+────────────────────────────────────────────────────────────────────────────*/
+a{color:var(--cherry);text-decoration:none}
+a:hover{color:var(--cherry-dark)}
+
+/*────────────────────────────────────────────────────────────────────────────
+  6. BUTTONS
+────────────────────────────────────────────────────────────────────────────*/
+.btn-cherry{background:var(--cherry);color:#fff;transition:background var(--trans-fast),transform .15s;will-change:transform;border-radius:var(--r)}
+.btn-cherry:hover{background:var(--cherry-dark);transform:translateY(-1px)}
+.btn-cherry:active{background:#9a021f;transform:translateY(0)}
+
+/*────────────────────────────────────────────────────────────────────────────
+  7. SIDEBAR
+────────────────────────────────────────────────────────────────────────────*/
+#sidebar{width:220px;background:var(--carbon);min-height:100vh}
+#sidebar .navbar-brand{font-weight:700;color:#fff;margin-left:.25rem;margin-bottom:1.75rem}
+#sidebar .nav-link{display:block;padding:.5rem .75rem;color:#fff;border-radius:var(--r);transition:background var(--trans-fast),opacity var(--trans-fast);opacity:.9}
+#sidebar .nav-link:hover,#sidebar .nav-link.active{background:var(--cherry);opacity:1}
+
+/*────────────────────────────────────────────────────────────────────────────
+  8. CARDS
+────────────────────────────────────────────────────────────────────────────*/
+.card{border-radius:.75rem;box-shadow:0 2px 6px rgba(0,0,0,.05);contain:layout style paint}
+.card-header{background:var(--accent-light)}
+.card-title{font-size:1.1rem;font-weight:600}
+
+/*────────────────────────────────────────────────────────────────────────────
+  9. DISPLAY
+────────────────────────────────────────────────────────────────────────────*/
+.display-6{font-size:2.25rem;font-weight:700}
+
+/*────────────────────────────────────────────────────────────────────────────
+ 10. STAT CARDS
+────────────────────────────────────────────────────────────────────────────*/
+.stat-card{background:var(--carbon);color:#fff}
+.stat-card .display-6{color:#fff}
+
+/*────────────────────────────────────────────────────────────────────────────
+ 11. TABLE
+────────────────────────────────────────────────────────────────────────────*/
+.table{border-collapse:separate;border-spacing:0 4px}
+.table>thead{background:var(--carbon);color:#fff}
+.table>tbody>tr{background:#f8f9fa;transition:transform var(--trans-fast);contain:layout style paint}
+.table>tbody>tr:hover{transform:scale(1.01);will-change:transform}
+.table td{vertical-align:middle;padding:.5rem}
+
+/*────────────────────────────────────────────────────────────────────────────
+ 12. DATATABLES WRAPPERS
+────────────────────────────────────────────────────────────────────────────*/
+.dataTables_wrapper .dt-buttons{margin-bottom:.5rem;margin-right:1rem}
+.dataTables_wrapper .form-control,.dataTables_wrapper .form-select{padding:.25rem .5rem;height:auto}
+.dataTables_wrapper .dataTables_filter label{display:flex;align-items:center;gap:.25rem}
+.dataTables_wrapper .dt-buttons .btn{background:var(--cherry);color:#fff;border:0;border-radius:var(--r);padding:.35rem .75rem;margin:0 .25rem;transition:background var(--trans-fast)}
+.dataTables_wrapper .dt-buttons .btn:hover{background:var(--cherry-dark)}
+.dataTables_wrapper .dataTables_paginate{margin-top:1rem}
+.dataTables_wrapper .dataTables_paginate .page-item .page-link{background:var(--cherry);color:#fff;border:none;border-radius:var(--r);margin:0 .25rem;padding:.4rem .9rem;transition:background var(--trans-fast),transform var(--trans-med)}
+.dataTables_wrapper .dataTables_paginate .page-item .page-link:hover{background:var(--cherry-dark);transform:translateY(-2px)}
+.dataTables_wrapper .dataTables_paginate .page-item.active .page-link{background:var(--cherry-dark)}
+.dataTables_wrapper .dataTables_paginate .page-item.disabled .page-link{background:var(--carbon-light);opacity:.6;cursor:not-allowed}
+.dataTables_wrapper .dataTables_paginate .page-item.previous .page-link,.dataTables_wrapper .dataTables_paginate .page-item.next .page-link{background-color:#b90325!important;color:azure!important;cursor:pointer;transition:background-color .3s ease,transform .2s ease,box-shadow .2s ease}.dataTables_wrapper .dataTables_paginate .page-item.previous .page-link:hover,.dataTables_wrapper .dataTables_paginate .page-item.next .page-link:hover{background-color:#b90325!important;transform:translateY(-2px) scale(1.05);box-shadow:0 4px 8px rgba(0,0,0,0.3)}
+
+
+/*────────────────────────────────────────────────────────────────────────────
+ 13. BADGES
+────────────────────────────────────────────────────────────────────────────*/
+.badge-partner{background:var(--cherry)}
+.badge-client{background:var(--carbon);color:#fff}
+
+/*────────────────────────────────────────────────────────────────────────────
+ 14. MODALS
+────────────────────────────────────────────────────────────────────────────*/
+.modal-content{border-radius:.5rem}
+.modal-header{border-bottom:0;background:var(--carbon);color:#fff}
+.modal-title{font-weight:600}
+.btn-close{filter:invert(1)}
+
+/*────────────────────────────────────────────────────────────────────────────
+ 15. FORMS
+────────────────────────────────────────────────────────────────────────────*/
+.form-label{font-weight:600;margin-bottom:.25rem}
+.form-control,.form-select{border:1px solid #dee2e6;border-radius:var(--r);transition:border-color var(--trans-fast),box-shadow var(--trans-fast)}
+.form-control:focus,.form-select:focus{border-color:var(--cherry);box-shadow:0 0 0 .2rem rgba(210,4,45,.25)}
+input:required:invalid{border-color:var(--cherry)}
+input:required:valid{border-color:var(--carbon-light)}
+
+/*────────────────────────────────────────────────────────────────────────────
+ 16. REDUCED MOTION
+────────────────────────────────────────────────────────────────────────────*/
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important}}
+
+/*────────────────────────────────────────────────────────────────────────────
+ 17. FOOTER
+────────────────────────────────────────────────────────────────────────────*/
+footer{background:var(--carbon);color:#fff;text-align:center;font-size:.875rem;padding:.75rem 0}
