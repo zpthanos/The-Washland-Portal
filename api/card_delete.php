@@ -1,31 +1,43 @@
 <?php
 declare(strict_types=1);
 require_once 'db.php';
+
 header('Content-Type: application/json; charset=utf-8');
 
-$id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-if (!$id) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'msg' => 'Άγνωστο ID κάρτας']);
-    exit;
-}
-
 try {
+    // φρόντισε στο db.php:
+    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+    if (!$id) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'msg' => 'Άγνωστο ID κάρτας']);
+        exit;
+    }
+
     $pdo->beginTransaction();
 
     $stmt = $pdo->prepare('DELETE FROM cards WHERE id = ?');
     $stmt->execute([$id]);
 
-    // Resequence IDs to be contiguous
-    $pdo->exec('SET @n := 0');
-    $pdo->exec('UPDATE cards SET id = (@n := @n + 1) ORDER BY id ASC');
-    $pdo->exec('ALTER TABLE cards AUTO_INCREMENT = (SELECT MAX(id) + 1 FROM (SELECT * FROM cards) AS t)');
+    if ($stmt->rowCount() === 0) {
+        // δεν βρέθηκε εγγραφή — κάνε rollback για καθαρότητα
+        $pdo->rollBack();
+        http_response_code(404);
+        echo json_encode(['success' => false, 'msg' => 'Δεν βρέθηκε κάρτα']);
+        exit;
+    }
 
     $pdo->commit();
     echo json_encode(['success' => true, 'msg' => 'Η κάρτα διαγράφηκε επιτυχώς']);
-} catch (Exception $e) {
-    $pdo->rollBack();
+} catch (Throwable $e) {
+    if ($pdo && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    // Προσοχή: σε production μην εκθέτεις $e->getMessage()
     http_response_code(500);
     echo json_encode(['success' => false, 'msg' => 'Σφάλμα διαγραφής']);
-    exit;
+    // error_log για server logs
+    error_log('card_delete error: ' . $e->getMessage());
 }

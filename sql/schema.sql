@@ -1,17 +1,17 @@
 BEGIN;
 
--- Use strict mode for data integrity
+-- Strict mode για data integrity
 SET
     SESSION sql_mode = 'STRICT_ALL_TABLES';
 
--- 1. Create database if missing
+-- 1. Δημιουργία ΒΔ
 CREATE DATABASE IF NOT EXISTS `washland` CHARACTER
 SET
     = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 USE `washland`;
 
--- 2. Create cards table with industry best practices
+-- 2. Πίνακας "cards"
 CREATE TABLE
     IF NOT EXISTS `cards` (
         `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,

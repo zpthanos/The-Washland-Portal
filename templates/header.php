@@ -28,7 +28,7 @@
         </ul>
     </aside>
 
-<!-- Toast -->
+<!-- Για το toast -->
   <div class="position-fixed top-0 end-0 p-3" style="z-index:1080;">
     <div id="liveToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="d-flex">

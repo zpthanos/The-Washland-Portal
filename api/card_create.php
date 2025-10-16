@@ -15,7 +15,7 @@ function respond(bool $success, string $msg): void {
 
 function validateCardData(array $data): void {
     $required = ['card_code', 'fullname', 'purchase_date', 'type', 'price'];
-    // 1. Required fields
+    //  Απαιτούμενα πεδία
     foreach ($required as $field) {
         if (!isset($data[$field]) || trim($data[$field]) === '') {
             throw new ValidationException('Συμπληρώστε όλα τα υποχρεωτικά πεδία');
